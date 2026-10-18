@@ -92,7 +92,7 @@ func (s *Service) SetupTOTP(userID string) (secret, otpauth string, err error) {
 		}
 		return "", "", ErrAuthUnavailable
 	}
-	return secret, TOTPURI(secret, email, getenvDefault("APP_NAME", "短剧工厂")), nil
+	return secret, TOTPURI(secret, email, getenvDefault("APP_NAME", "M-duanju")), nil
 }
 
 // EnableTOTP 校验 6 位码后正式启用，返回一次性恢复码

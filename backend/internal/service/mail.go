@@ -109,7 +109,7 @@ func (m *Mailer) Send(to, subject, text, html string) error {
 	}
 
 	var buf bytes.Buffer
-	buf.WriteString("From: " + mime.BEncoding.Encode("UTF-8", "短剧工厂") + " <" + m.From + ">\r\n")
+	buf.WriteString("From: " + mime.BEncoding.Encode("UTF-8", "M-duanju") + " <" + m.From + ">\r\n")
 	buf.WriteString("To: " + to + "\r\n")
 	buf.WriteString("Subject: " + mime.BEncoding.Encode("UTF-8", subject) + "\r\n")
 	buf.WriteString("Date: " + time.Now().Format(time.RFC1123Z) + "\r\n")
@@ -211,12 +211,12 @@ func (s *Service) SendWelcome(to, nickname string) {
 			return
 		}
 		html := fmt.Sprintf(`<div style="font-family:sans-serif;max-width:520px;margin:0 auto;padding:24px">`+
-			`<h2 style="color:#1B2A4A">欢迎加入短剧工厂</h2>`+
+			`<h2 style="color:#1B2A4A">欢迎加入M-duanju</h2>`+
 			`<p>%s，你的账号已创建成功。</p>`+
 			`<p style="color:#6B7A94;font-size:13px">登录后可创建你的第一部 AI 短片。</p>`+
 			`<p style="margin-top:24px"><a href="%s" style="background:#1B2A4A;color:#fff;padding:10px 20px;border-radius:4px;text-decoration:none">开始创作</a></p></div>`,
 			htmlsafe.EscapeString(nickname), htmlsafe.EscapeString(getenvDefault("PUBLIC_BASE_URL", "")))
-		if err := m.Send(to, "欢迎加入短剧工厂", "欢迎加入短剧工厂，你的账号已创建。", html); err != nil {
+		if err := m.Send(to, "欢迎加入M-duanju", "欢迎加入M-duanju，你的账号已创建。", html); err != nil {
 			log.Printf("[mail] 发送欢迎邮件失败: %v", err)
 		}
 	}()
@@ -260,13 +260,13 @@ func (s *Service) SendPartnerInvite(to, name, token string) error {
 	if !m.Enabled() {
 		return ErrMailUnavailable
 	}
-	subject := "邀请你开通短剧工厂合作伙伴"
-	text := "你被邀请开通短剧工厂合作伙伴（代理）。\n合作方名称：" + name +
+	subject := "邀请你开通M-duanju合作伙伴"
+	text := "你被邀请开通M-duanju合作伙伴（代理）。\n合作方名称：" + name +
 		"\n请在 7 天内打开以下链接，登录或注册后接受邀请：\n" + link +
 		"\n\n如非本人操作，请忽略本邮件。"
 	html := fmt.Sprintf(`<div style="font-family:sans-serif;max-width:560px;margin:0 auto;padding:24px">
-<h2 style="color:#1B2A4A">邀请你开通短剧工厂合作伙伴</h2>
-<p>你被邀请成为短剧工厂合作伙伴（代理），合作方名称：<b>%s</b>。</p>
+<h2 style="color:#1B2A4A">邀请你开通M-duanju合作伙伴</h2>
+<p>你被邀请成为M-duanju合作伙伴（代理），合作方名称：<b>%s</b>。</p>
 <p>请在 7 天内点击下方按钮，登录或注册后接受邀请：</p>
 <p style="margin:24px 0"><a href="%s" style="background:#1B2A4A;color:#fff;padding:10px 20px;border-radius:4px;text-decoration:none">接受邀请</a></p>
 <p style="color:#6B7A94;font-size:13px">如果按钮无法打开，请复制此链接：%s</p>

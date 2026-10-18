@@ -35,7 +35,7 @@ func GenerateTOTPSecret() (string, error) {
 // TOTPURI 生成 otpauth:// URI，供前端转二维码
 func TOTPURI(secret, email, issuer string) string {
 	if issuer == "" {
-		issuer = "短剧工厂"
+		issuer = "M-duanju"
 	}
 	label := url.PathEscape(issuer + ":" + email)
 	q := url.Values{}

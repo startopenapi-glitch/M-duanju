@@ -72,7 +72,7 @@ export function AppShell() {
                 ☰
               </button>
               <span className="app-topbar-title">
-                短剧工厂{mode ? ` / ${title}` : ""}
+                M-duanju{mode ? ` / ${title}` : ""}
               </span>
             </header>
 

@@ -31,7 +31,7 @@ export function PromotionQR({ value }: { value: string }) {
       {url ? (
         <>
           <img src={url} width="192" height="192" alt="推广链接二维码" />
-          <a className="btn" href={url} download="短剧工厂-推广二维码.svg">
+          <a className="btn" href={url} download="M-duanju-推广二维码.svg">
             下载二维码
           </a>
         </>

@@ -31,7 +31,7 @@ export default function PartnerLanding() {
     <main className="min-h-screen flex items-center justify-center px-5 py-10">
       <div className="w-full max-w-md">
         <div className="text-center mb-6">
-          <h1 className="text-2xl font-bold tracking-tight">短剧工厂</h1>
+          <h1 className="text-2xl font-bold tracking-tight">M-duanju</h1>
           <div className="text-xs text-ink3 mt-1">AI 短剧创作平台</div>
         </div>
 

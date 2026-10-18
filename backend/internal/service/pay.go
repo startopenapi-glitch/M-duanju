@@ -224,10 +224,10 @@ func (s *Service) CreatePayOrder(userID string, amountCents int64, channel, clie
 
 	var codeURL, h5URL string
 	if channel == "h5" {
-		h5URL, err = wp.CreateH5Order(outTradeNo, "短剧工厂积分充值", amountCents, clientIP,
+		h5URL, err = wp.CreateH5Order(outTradeNo, "M-duanju积分充值", amountCents, clientIP,
 			getenvDefault("PUBLIC_BASE_URL", "http://localhost:8088"))
 	} else {
-		codeURL, err = wp.CreateNativeOrder(outTradeNo, "短剧工厂积分充值", amountCents, expireAt)
+		codeURL, err = wp.CreateNativeOrder(outTradeNo, "M-duanju积分充值", amountCents, expireAt)
 	}
 	if err != nil {
 		log.Printf("[pay] 下单失败 user=%s cents=%d ch=%s err=%v", userID, amountCents, channel, err)

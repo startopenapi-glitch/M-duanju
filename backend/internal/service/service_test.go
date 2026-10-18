@@ -117,7 +117,7 @@ func TestTOTPSkewWindow(t *testing.T) {
 }
 
 func TestTOTPURIContainsRequiredParams(t *testing.T) {
-	uri := TOTPURI("ABC234", "a@b.com", "短剧工厂")
+	uri := TOTPURI("ABC234", "a@b.com", "M-duanju")
 	for _, sub := range []string{"otpauth://totp/", "secret=ABC234", "algorithm=SHA1", "digits=6", "period=30"} {
 		if !strings.Contains(uri, sub) {
 			t.Errorf("URI 缺少 %q: %s", sub, uri)

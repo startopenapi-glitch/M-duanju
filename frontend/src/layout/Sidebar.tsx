@@ -21,7 +21,7 @@ export function Sidebar({
       <div className="app-brand">
         <span className="app-brand-mark">剧</span>
         <div>
-          <b>短剧工厂</b>
+          <b>M-duanju</b>
           <small>AI 一键成片</small>
         </div>
       </div>

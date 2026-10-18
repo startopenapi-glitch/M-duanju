@@ -58,7 +58,7 @@ export function WorkspaceNav({
       <div className="app-brand">
         <span className="app-brand-mark">剧</span>
         <div>
-          <b>短剧工厂</b>
+          <b>M-duanju</b>
           <small>
             {mode === "admin" ? "运营管理工作台" : "推广合作工作台"}
           </small>

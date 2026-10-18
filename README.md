@@ -1,4 +1,4 @@
-# Drama Platform
+# M-duanju
 
 一个可自托管的 AI 短剧生成平台：从一句话想法生成剧本、定妆照、分镜视频，最后合成成片；包含项目工作台、生成队列、积分/充值、运营后台和代理邀请。
 
@@ -151,6 +151,6 @@ npm run build
 
 - 代码：[Apache License 2.0](LICENSE)
 - 第三方依赖：[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md)
-- “Drama Platform”/示例 UI 中的产品名称仅用于演示；生产品牌、Logo、域名不随代码授权，见 [TRADEMARKS.md](TRADEMARKS.md)。
+- “M-duanju”/示例 UI 中的产品名称仅用于演示；生产品牌、Logo、域名不随代码授权，见 [TRADEMARKS.md](TRADEMARKS.md)。
 
 本项目不包含任何真实客户数据、生产密钥或生产部署配置。

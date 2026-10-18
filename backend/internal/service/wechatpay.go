@@ -297,7 +297,7 @@ func (w *WechatPay) CreateH5Order(outTradeNo, description string, amountCents in
 		"scene_info": map[string]interface{}{
 			"payer_client_ip": clientIP,
 			"h5_info": map[string]string{
-				"type": "Wap", "app_name": "短剧工厂", "app_url": appURL,
+				"type": "Wap", "app_name": "M-duanju", "app_url": appURL,
 			},
 		},
 	}

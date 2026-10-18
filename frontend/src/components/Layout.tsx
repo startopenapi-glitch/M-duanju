@@ -16,7 +16,7 @@ export default function Layout() {
       <header className="border-b-2 border-ink bg-paper">
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between gap-4">
           <div className="flex items-baseline gap-3">
-            <h1 className="text-xl font-bold tracking-tight">短剧工厂</h1>
+            <h1 className="text-xl font-bold tracking-tight">M-duanju</h1>
             <span className="text-xs text-ink3">AI 一键成片</span>
           </div>
           {user && (

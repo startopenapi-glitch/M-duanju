@@ -1,3 +1,4 @@
+name: m-duanju
 services:
   db:
     image: postgres:16-alpine
