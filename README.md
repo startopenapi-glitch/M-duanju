@@ -36,7 +36,7 @@ docker compose up --build
 如果所在网络无法访问 `proxy.golang.org`，可在构建时指定镜像代理：
 
 ```bash
-GOPROXY=https://goproxy.cn,direct docker compose build --no-cache
+GOPROXY=https://goproxy.cn,direct docker compose build
 ```
 
 默认配置：
