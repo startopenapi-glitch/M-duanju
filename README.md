@@ -33,6 +33,12 @@ docker compose up --build
 
 打开 <http://localhost:8088>，注册账号即可。首次启动会自动执行数据库迁移。
 
+如果所在网络无法访问 `proxy.golang.org`，可在构建时指定镜像代理：
+
+```bash
+GOPROXY=https://goproxy.cn,direct docker compose build
+```
+
 默认配置：
 
 - 支付：`WXPAY_MOCK=1`，不会调用真实微信支付；
