@@ -17,6 +17,8 @@ services:
   migrate:
     build:
       context: ./backend
+      args:
+        GOPROXY: ${GOPROXY:-https://proxy.golang.org,direct}
     command: ["migrate"]
     environment: &backend-env
       DATABASE_URL: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me-local-db-password}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
@@ -37,6 +39,8 @@ services:
   api:
     build:
       context: ./backend
+      args:
+        GOPROXY: ${GOPROXY:-https://proxy.golang.org,direct}
     command: ["api"]
     environment: *backend-env
     ports:
@@ -50,6 +54,8 @@ services:
   worker:
     build:
       context: ./backend
+      args:
+        GOPROXY: ${GOPROXY:-https://proxy.golang.org,direct}
     command: ["worker"]
     environment: *backend-env
     volumes:
