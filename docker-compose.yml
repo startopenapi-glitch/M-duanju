@@ -1,0 +1,72 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-drama}
+      POSTGRES_USER: ${POSTGRES_USER:-drama}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me-local-db-password}
+    volumes:
+      - drama-postgres:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER:-drama} -d $${POSTGRES_DB:-drama}"]
+      interval: 3s
+      timeout: 3s
+      retries: 20
+
+  migrate:
+    build:
+      context: ./backend
+    command: ["migrate"]
+    environment: &backend-env
+      DATABASE_URL: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me-local-db-password}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
+      DATABASE_URL_OWNER: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me-local-db-password}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
+      JWT_SECRET: ${JWT_SECRET:-change-me-use-a-random-32-byte-secret}
+      PUBLIC_BASE_URL: ${PUBLIC_BASE_URL:-http://localhost:8088}
+      STORAGE_DIR: /data/storage
+      WXPAY_MOCK: ${WXPAY_MOCK:-1}
+      NODE_ENV: ${NODE_ENV:-development}
+      LIMENG_BASE_URL: ${LIMENG_BASE_URL:-http://localhost:8081/v1}
+      LIMENG_API_KEY: ${LIMENG_API_KEY:-replace-with-your-provider-key}
+      LIMENG_TEXT_MODEL: ${LIMENG_TEXT_MODEL:-qwen3.8-27b-local}
+      VIDEO_RESOLUTION: ${VIDEO_RESOLUTION:-720P}
+    depends_on:
+      db:
+        condition: service_healthy
+
+  api:
+    build:
+      context: ./backend
+    command: ["api"]
+    environment: *backend-env
+    ports:
+      - "8080:8080"
+    volumes:
+      - drama-storage:/data/storage
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  worker:
+    build:
+      context: ./backend
+    command: ["worker"]
+    environment: *backend-env
+    volumes:
+      - drama-storage:/data/storage
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+
+  web:
+    build:
+      context: ./frontend
+    ports:
+      - "8088:80"
+    volumes:
+      - drama-storage:/var/www/drama-files:ro
+    depends_on:
+      - api
+
+volumes:
+  drama-postgres:
+  drama-storage:

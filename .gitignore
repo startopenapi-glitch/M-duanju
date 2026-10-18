@@ -1,0 +1,11 @@
+node_modules/
+dist/
+.test/
+*.log
+.env*
+.secrets/
+*.pem
+*.key
+verification/artifacts/
+
+!.env.example

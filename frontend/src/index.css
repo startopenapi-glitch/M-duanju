@@ -1,0 +1,158 @@
+@import "./styles/tokens.css";
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root { color-scheme: light; }
+body { @apply bg-paper text-ink font-sans antialiased; }
+
+@layer components {
+  .btn { @apply inline-flex items-center justify-center gap-2 border border-line2 bg-card text-ink
+               px-4 py-2 rounded text-sm font-semibold transition-all disabled:opacity-40 disabled:cursor-not-allowed; }
+  .btn:hover:not(:disabled) { @apply border-ink bg-white; }
+  .btn-primary { @apply bg-ink text-[#F5F1E9] border-ink; }
+  .btn-primary:hover:not(:disabled) { @apply bg-[#0F1A30]; }
+  .btn-amber { @apply bg-ambersoft text-amberdeep border-[#E0C9A0]; }
+  .btn-amber:hover:not(:disabled) { @apply bg-[#EEDFC2]; }
+  .btn-danger { @apply text-red border-[#E0BDB6]; }
+  .btn-danger:hover:not(:disabled) { @apply bg-redsoft; }
+  .btn-sm { @apply px-3 py-1.5 text-[13px]; }
+  .btn-block { @apply w-full; }
+
+  .input { @apply w-full px-3 py-2 border border-line2 rounded bg-card text-ink text-sm
+                  focus:outline-none focus:border-amber focus:ring-2 focus:ring-amber/30; }
+  .label { @apply block text-xs font-semibold text-ink2 mb-1.5 tracking-wide; }
+
+  .card { @apply bg-card border border-line rounded p-5; }
+
+  .tag { @apply inline-block text-[11px] font-semibold px-2.5 py-0.5 rounded-full whitespace-nowrap
+                bg-[#EFEAE1] text-ink3; }
+  .tag-green { @apply bg-greensoft text-green; }
+  .tag-red { @apply bg-redsoft text-red; }
+  .tag-amber { @apply bg-ambersoft text-amberdeep; }
+  .tag-navy { @apply bg-navy text-[#F5F1E9]; }
+
+  .note { @apply rounded px-4 py-3 my-3 text-[13px] leading-relaxed; }
+  .note-info { @apply bg-ambersoft text-amberdeep border-l-[3px] border-amber; }
+  .note-err { @apply bg-redsoft text-red border-l-[3px] border-red; }
+  .note-ok { @apply bg-greensoft text-green border-l-[3px] border-green; }
+
+  .spin { @apply inline-block w-3 h-3 border-2 border-line2 border-t-amber rounded-full animate-spin align-[-2px]; }
+}
+
+/* ═══════════ 动效（参考 transitions.dev 规范） ═══════════
+   所有动效必须在 prefers-reduced-motion 下降级为零 —— 无障碍硬要求 */
+
+:root {
+  --modal-open-dur: 250ms;
+  --modal-close-dur: 150ms;
+  --modal-scale: 0.96;
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+  --ease-bob: cubic-bezier(0.34, 1.35, 0.64, 1);
+  --check-dur: 500ms;
+}
+
+/* ── Modal 开合：从中心略微放大进入，关闭时缩回再移除 ── */
+.t-modal {
+  transform-origin: center;
+  transform: scale(var(--modal-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--modal-open-dur) var(--ease-out-soft),
+              opacity var(--modal-open-dur) var(--ease-out-soft);
+  will-change: transform, opacity;
+}
+.t-modal.is-open {
+  transform: scale(1);
+  opacity: 1;
+  pointer-events: auto;
+}
+.t-modal.is-closing {
+  transform: scale(var(--modal-scale));
+  opacity: 0;
+  pointer-events: none;
+  transition: transform var(--modal-close-dur) var(--ease-out-soft),
+              opacity var(--modal-close-dur) var(--ease-out-soft);
+}
+
+/* ── 支付成功：淡入 + 转正 + 去模糊 + 上浮 ── */
+.t-success {
+  display: inline-block;
+  transform-origin: center;
+  opacity: 0;
+  will-change: transform, opacity, filter;
+}
+.t-success[data-state="in"] {
+  animation:
+    t-fade   var(--check-dur) var(--ease-out-soft) forwards,
+    t-rotate var(--check-dur) var(--ease-out-soft) forwards,
+    t-blur   var(--check-dur) var(--ease-out-soft) forwards,
+    t-bob    var(--check-dur) var(--ease-bob)      forwards;
+}
+@keyframes t-fade   { from { opacity: 0 } to { opacity: 1 } }
+@keyframes t-rotate { from { transform: rotate(80deg) } to { transform: rotate(0) } }
+@keyframes t-blur   { from { filter: blur(10px) } to { filter: blur(0) } }
+@keyframes t-bob    { from { translate: 0 40px } to { translate: 0 0 } }
+
+/* ★ 无障碍：用户要求减少动效时全部归零 */
+@media (prefers-reduced-motion: reduce) {
+  .t-modal, .t-modal.is-open, .t-modal.is-closing { transition: none !important; }
+  .t-success[data-state="in"] { animation: none !important; opacity: 1 !important; }
+  *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+}
+
+/* Shared controls: one contract across creation, billing and operations. */
+body {background:var(--surface-page);color:var(--text-primary)}
+.btn {min-height:44px;border-radius:var(--radius-control);border-color:var(--border);background:var(--surface-card);color:var(--text-primary)}
+.btn-primary,.btn-primary:hover:not(:disabled) {background:var(--action);border-color:var(--action);color:#fff}
+.btn-danger {color:var(--danger)}
+.input {min-height:44px;border-radius:var(--radius-control);border-color:var(--border);background:var(--surface-card);color:var(--text-primary);max-width:100%}
+.card {border-radius:var(--radius-card);border-color:var(--border);background:var(--surface-card)}
+.ui-page-head {display:flex;align-items:flex-start;justify-content:space-between;gap:24px;flex-wrap:wrap;margin-bottom:24px}
+.ui-page-head>div {min-width:0}
+.ui-page-head h1 {font-size:28px;line-height:1.3;font-weight:700;letter-spacing:-.5px;overflow-wrap:anywhere}
+.ui-page-head p {font-size:14px;line-height:1.7;color:var(--text-secondary);margin-top:8px;max-width:68ch}
+.ui-actions {display:flex;gap:8px;flex-wrap:wrap;align-items:center}
+.ui-field {min-width:0;display:grid;gap:8px}
+.ui-field>label {font-size:14px;font-weight:600;color:var(--text-primary)}
+.ui-hint {font-size:13px;color:var(--text-secondary)}
+.ui-field-error {color:var(--danger);font-size:13px}
+.ui-badge {display:inline-flex;align-items:center;border-radius:999px;padding:4px 10px;font-size:12px;line-height:1.5;white-space:normal;overflow-wrap:anywhere}
+.ui-badge-neutral {background:#eef0f4;color:var(--text-secondary)}
+.ui-badge-info {background:var(--info-bg);color:var(--info)}
+.ui-badge-success {background:var(--success-bg);color:var(--success)}
+.ui-badge-warning {background:var(--warning-bg);color:var(--warning)}
+.ui-badge-danger {background:var(--danger-bg);color:var(--danger)}
+.ui-mobile-list {display:grid;gap:12px;list-style:none;padding:0}
+.note-err {color:var(--danger);background:var(--danger-bg);border-color:var(--danger)}
+.note-info {color:var(--info);background:var(--info-bg);border-color:var(--info)}
+.t-modal {max-height:90dvh;overflow:auto;border-radius:var(--radius-modal)}
+:focus-visible {outline:3px solid var(--focus);outline-offset:3px}
+@media(max-width:767px){.ui-page-head h1{font-size:24px}.input{font-size:16px}.ui-page-head{gap:16px}.card{padding:16px}}
+.project-list {display:grid;gap:12px;min-width:0}
+.project-row {display:flex;align-items:center;justify-content:space-between;gap:16px;min-width:0;max-width:100%}
+.project-row-link {display:flex;align-items:center;flex:1;min-width:0;color:inherit;text-decoration:none}
+.project-row-link>div {min-width:0;flex:1}
+.project-row-actions {display:flex;align-items:center;gap:8px;flex-shrink:0}
+.project-delete {font-size:12px;padding:5px 9px;color:var(--danger,#b42318);border-color:currentColor}
+.project-row h2 {font-size:16px;font-weight:600;overflow-wrap:anywhere}
+.project-row p {font-size:13px;color:var(--text-secondary);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;margin-top:6px}
+.project-row>.tag {flex-shrink:0}
+.ui-stages {display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:8px;padding:16px}
+.ui-stages li {display:flex;align-items:center;gap:8px;font-size:13px;flex-wrap:wrap}
+.ui-stages li>span {display:grid;place-items:center;width:24px;height:24px;border-radius:50%;background:#eef0f4}
+.ui-stages li>span.ui-stage-active {background:var(--action);color:white}
+.app-sidebar {width:var(--sidebar-w)}
+
+.auth-page{min-height:100dvh;display:grid;place-items:center;padding:32px 20px;background:var(--surface-page)}
+.auth-page .card{display:grid;gap:20px}
+.auth-page button,.auth-page a,.account-menu a{min-height:44px}
+.auth-page a{display:inline-flex;align-items:center}
+.creation-details>summary{min-height:44px;padding:12px 0;cursor:pointer;font-weight:600}
+.ui-mobile-list{display:grid;gap:12px;list-style:none;padding:0}
+.ui-mobile-list li{min-width:0;overflow-wrap:anywhere}
+
+@media (max-width: 420px) {
+  .ui-stages li { flex-direction: column; flex-wrap: nowrap; text-align: center; gap: 6px; }
+  .ui-stages li > span { flex-shrink: 0; }
+}
