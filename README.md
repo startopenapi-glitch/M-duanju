@@ -73,7 +73,7 @@ Dockerfile               后端镜像
 ### 1. 准备
 
 - Go **1.27+**
-- Node.js **20+**（推荐 22）
+- Node.js **22.12+**
 - PostgreSQL **16+**
 - ffmpeg/ffprobe（只有合成/媒体探测需要）
 - 可选：Docker + Docker Compose
