@@ -46,7 +46,7 @@ flowchart LR
 
 | 层 | 技术 |
 |---|---|
-| 后端 | Go 1.23、Gin、pgx、PostgreSQL |
+| 后端 | Go 1.27、Gin、pgx、PostgreSQL |
 | 前端 | React 18、TypeScript、Vite、Tailwind CSS |
 | 媒体 | ffmpeg/ffprobe（外部依赖，不随仓库分发） |
 | 支付 | 微信支付 API v3（可 mock） |
@@ -72,7 +72,7 @@ Dockerfile               后端镜像
 
 ### 1. 准备
 
-- Go **1.23+**
+- Go **1.27+**
 - Node.js **20+**（推荐 22）
 - PostgreSQL **16+**
 - ffmpeg/ffprobe（只有合成/媒体探测需要）

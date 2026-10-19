@@ -21,6 +21,13 @@ gitleaks git . --log-opts="--all" --redact
 gitleaks dir . --redact
 ```
 
+## Dependency scan
+
+- `govulncheck ./...`: **0 vulnerabilities**
+- `npm audit`: **0 vulnerabilities**
+- Go module updates: Go 1.27, pgx 5.11, x/net, x/crypto, JWT 5.3.1
+- Frontend updates: Vitest 5, Tailwind CSS 4, React Router 7
+
 ## Known non-secret test fixtures
 
 Synthetic test values and SHA256 fixture hashes were removed or explicitly
