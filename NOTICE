@@ -1,0 +1,15 @@
+Drama Platform (短剧生成平台)
+Copyright 2026 The Drama Platform Authors
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+This product includes third-party open-source software. See README.md and
+the dependency manifests for the respective licenses.
+
+ffmpeg is an external runtime dependency and is not distributed in this
+repository. If you choose to bundle ffmpeg in a container image, you are
+responsible for complying with its license (GPL/LGPL as applicable).

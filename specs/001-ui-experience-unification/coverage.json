@@ -1,0 +1,170 @@
+[
+  {
+    "id": "AC-001",
+    "status": "PASS",
+    "evidence": "navigation.test.tsx、AdminWorkspace.test.tsx；48页面与账户导航场景",
+    "boundary": "菜单角色与身份失败不混淆",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-002",
+    "status": "PASS",
+    "evidence": "after/browser.json；interactions/results.json（72项含48次缩放重排）",
+    "boundary": "375/768/1440px各16页；每页1个h1；模拟200%重排不是真机缩放",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-003",
+    "status": "PASS",
+    "evidence": "projects.test.tsx；TestProjectListFilterCountsAndScopesAllPages",
+    "boundary": "同筛选共享读取、已载分页刷新、服务端筛选与归属",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-004",
+    "status": "PASS",
+    "evidence": "composer.test.tsx；creation intent；浏览器create-once和draft-focus-and-settings",
+    "boundary": "一次开始动作，无预算确认；草稿/设置同源",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-005",
+    "status": "PASS",
+    "evidence": "api.test.ts、intent.test.tsx；浏览器draft-focus-and-settings",
+    "boundary": "会话revision、迟到响应、草稿重开；跨标签以StorageEvent模拟",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-006",
+    "status": "PASS",
+    "evidence": "intent.test.tsx、project-intent.test.tsx、TestUIRunNotCreatedCodeOnlyBeforeCreation",
+    "boundary": "明确拒绝/未知重放/刷新中断区分；服务端幂等全量回归",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-007",
+    "status": "PASS",
+    "evidence": "presentation.test.ts；48页面project阶段断言；Project/FinalReview既有回归",
+    "boundary": "旧基线2个阶段高亮，新版1个；完成态无假运行",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-008",
+    "status": "PASS",
+    "evidence": "output-preview.test.tsx；Project/FinalReview回归",
+    "boundary": "合成404/媒体错误和保留版本；未下载客户素材，外部签名URL使用原生链接",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-009",
+    "status": "PASS",
+    "evidence": "project-flow.test.tsx、review-run-state.test.tsx、FinalReview.test.tsx",
+    "boundary": "结算待核对、unknown、失败和旧成片展示不触发新生成",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-010",
+    "status": "PASS",
+    "evidence": "ui_read_test.go、pay_run_test.go；order-binding-mismatch浏览器",
+    "boundary": "精确run/key、越权/非法/旧版、订单归属，不能退回latest",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-011",
+    "status": "PASS",
+    "evidence": "billing presentation/recharge-flow；paid-without-ledger浏览器",
+    "boundary": "付款、账本入账、原run继续分别读取；manual保留原单",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-012",
+    "status": "PASS",
+    "evidence": "run_resume_test.go、review_money_test.go；original-recharge-continuation浏览器",
+    "boundary": "到账读取后才导航；不POST新run或resume",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-013",
+    "status": "PASS",
+    "evidence": "完整Go/race；pay_run、review_money、round2_money_extra、run_resume",
+    "boundary": "模拟不足额、重复通知、并发与恢复队列；非真实支付",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-014",
+    "status": "PASS",
+    "evidence": "codex_cancel、run_resume、settlement、remediation_regression；ui_read鉴权",
+    "boundary": "终态、停用、未知提交按原规则保留；无真实生成",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-015",
+    "status": "PASS",
+    "evidence": "recharge-flow.test.tsx、api.test.ts、浏览器manual-order-retained",
+    "boundary": "页面卸载/身份切换保护与刷新原单；服务端恢复独立测试",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-016",
+    "status": "PASS",
+    "evidence": "Settings/navigation测试与App路由代码核对；浏览器导航和刷新场景",
+    "boundary": "兼容/security、settings旧参数；未引入returnTo外跳",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-017",
+    "status": "PASS",
+    "evidence": "AdminWorkspace.test.tsx；后端router鉴权及账户全量测试",
+    "boundary": "越权后端拒绝；身份晚响应被抛弃",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-018",
+    "status": "PASS",
+    "evidence": "primitives.test.tsx；浏览器菜单Enter/弹层Escape/焦点返回；截图走查",
+    "boundary": "共享主控件44px和token色彩；非屏幕阅读器专项认证",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-019",
+    "status": "未验证",
+    "evidence": "375px重排和弹层已验；没有真实手机设备会话",
+    "boundary": "软键盘、安全区、真实Safari未验证，不能以Chromium冒充",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-020",
+    "status": "PASS",
+    "evidence": "polling.test.tsx、recharge-flow.test.tsx；请求计数",
+    "boundary": "隐藏暂停、可见/online核对、单飞、错误退避；动作强制刷新旧请求取消",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-021",
+    "status": "PASS",
+    "evidence": "before-final/performance.json、after/performance.json、performance-comparison.json",
+    "boundary": "6路由各5次；同浏览器合成条件；新增原单查询无旧版对应项，仅报绝对值",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-022",
+    "status": "PASS",
+    "evidence": "商业写路径diff核对；全量Go/race/PG10",
+    "boundary": "无定价、套餐、扣费、退款、归属/分佣规则改动；不做真实交易",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-023",
+    "status": "PASS",
+    "evidence": "verification/reports/ui-unification-20261018/summary.json",
+    "boundary": "Go/race/PG10各478；Vitest100+Node4；typecheck/build/cache通过",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  },
+  {
+    "id": "AC-024",
+    "status": "PASS",
+    "evidence": "本目录completion.md、release-plan.md、独立复审记录与coverage.json",
+    "boundary": "实现与验证可追溯；真机限制保留；部署未执行",
+    "codeCommit": "4783d3547f105d2a6af2424c490a6e2df4c1cb1d"
+  }
+]

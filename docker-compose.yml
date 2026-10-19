@@ -1,0 +1,93 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB:-drama}
+      POSTGRES_USER: ${POSTGRES_USER:-drama}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-change-me}
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+
+  migrate:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_FFMPEG: "false"
+    command: ["migrate"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
+      DATABASE_URL_OWNER: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: "no"
+
+  api:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        INSTALL_FFMPEG: "false"
+    command: ["api"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
+      BIND_ADDR: 0.0.0.0
+      PORT: "8080"
+      STORAGE_DIR: /data/storage
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+    volumes:
+      - media:/data/storage
+    ports:
+      - "8080:8080"
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+
+  worker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        # Build with INSTALL_FFMPEG=true only if you accept ffmpeg's license.
+        INSTALL_FFMPEG: ${INSTALL_FFMPEG:-false}
+    command: ["worker"]
+    env_file: .env
+    environment:
+      DATABASE_URL: postgres://${POSTGRES_USER:-drama}:${POSTGRES_PASSWORD:-change-me}@db:5432/${POSTGRES_DB:-drama}?sslmode=disable
+      STORAGE_DIR: /data/storage
+      JWT_SECRET: ${JWT_SECRET:?set JWT_SECRET in .env}
+      FFMPEG_PATH: ffmpeg
+      FFPROBE_PATH: ffprobe
+      ASSEMBLY_FFMPEG_PATH: ffmpeg
+      ASSEMBLY_FFPROBE_PATH: ffprobe
+    volumes:
+      - media:/data/storage
+    depends_on:
+      migrate:
+        condition: service_completed_successfully
+      db:
+        condition: service_healthy
+
+  web:
+    build:
+      context: frontend
+      dockerfile: Dockerfile
+    ports:
+      - "3000:80"
+    depends_on:
+      api:
+        condition: service_started
+
+volumes:
+  pgdata:
+  media:

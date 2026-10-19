@@ -1,0 +1,42 @@
+# dependencies / build output
+node_modules/
+frontend/node_modules/
+dist/
+frontend/dist/
+.test/
+*.log
+
+# secrets and local environment
+.env
+.env.*
+!.env.example
+.secrets/
+*.pem
+*.key
+*.p12
+*.pfx
+*.crt
+*.cer
+certs/
+
+# data and backups
+*.dump
+*.sql.gz
+*.tar.gz
+*.tgz
+backup/
+backups/
+evidence/
+storage/
+verification/artifacts/
+
+# external binaries (GPL/LGPL): install ffmpeg separately
+tools/bin/ffmpeg
+tools/bin/ffprobe
+ffmpeg
+ffprobe
+
+# editor / OS
+.DS_Store
+.idea/
+.vscode/

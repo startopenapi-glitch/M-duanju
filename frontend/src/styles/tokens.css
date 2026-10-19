@@ -1,0 +1,8 @@
+:root {
+ --surface-page:#f6f7f9; --surface-card:#fff; --text-primary:#162033; --text-secondary:#566174;
+ --border:#dce1e8; --action:#183153; --focus:#255eae; --success:#21623b; --success-bg:#eaf5ee;
+ --warning:#80530a; --warning-bg:#fff5df; --danger:#a63030; --danger-bg:#fff0ef; --info:#255eae; --info-bg:#edf3fc;
+ --radius-control:10px; --radius-card:14px; --radius-modal:16px; --sidebar-w:240px;
+ --space-1:4px;--space-2:8px;--space-3:12px;--space-4:16px;--space-6:24px;--space-8:32px;
+ --modal-open-dur:180ms;--modal-close-dur:150ms;
+}

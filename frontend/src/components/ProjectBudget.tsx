@@ -1,0 +1,10 @@
+import {useEffect,useState} from 'react'
+import {api,errorMessage,staleError,type Project,type Estimate} from '../lib/api'
+import {creditsToYuan} from '../lib/format'
+import {projectsChanged} from '../lib/projects'
+export function ProjectBudget({project:p,onSaved}:{project:Project;onSaved:()=>Promise<void>}){
+ const [budget,setBudget]=useState(String(p.budgetCredits/100)),[busy,setBusy]=useState(false),[error,setError]=useState(''),[estimate,setEstimate]=useState<Estimate|null>(null)
+ useEffect(()=>{let active=true;const c=new AbortController();api.get<Estimate>(`/projects/estimate?totalSeconds=${p.totalSeconds}`,c.signal).then(e=>{if(active)setEstimate(e)}).catch(()=>{});return()=>{active=false;c.abort()}},[p.totalSeconds])
+ async function save(e:React.FormEvent){e.preventDefault();const value=Number(budget);if(!Number.isInteger(value)||value<5||value>2000){setError('请输入5–2000元的整数');return}setBusy(true);setError('');try{await api.patch(`/projects/${p.id}`,{budgetYuan:value});projectsChanged();await onSaved()}catch(e){if(!staleError(e))setError(errorMessage(e))}finally{setBusy(false)}}
+ return <section className="card space-y-3" aria-label="项目预算"><div className="flex flex-wrap gap-4 text-sm"><b>最高预算 ¥{creditsToYuan(p.budgetCredits)}</b><span>已结算 ¥{creditsToYuan(p.spentCredits)}</span><span>任务预留 ¥{creditsToYuan(p.reservedCredits||0)}</span></div><p className="text-sm text-ink3">{estimate?`首次完整生成预计 ¥${creditsToYuan(estimate.estimatedCredits)}，含一次定妆照和 ${estimate.segmentCount} 段视频。`:'费用估算暂不可用。'}重试可能产生额外费用，实际以结算为准。</p><form onSubmit={save} className="flex flex-wrap items-end gap-3"><div><label className="label" htmlFor="project-budget">调整最高预算（元，整数）</label><input id="project-budget" className="input" inputMode="numeric" type="number" min={5} max={2000} step={1} value={budget} onChange={e=>setBudget(e.target.value)}/></div><button className="btn" disabled={busy}>{busy?'保存中…':'确认保存预算'}</button></form><p className="text-xs text-ink3">只保存你确认的上限；暂停任务需单独点击继续。</p>{error&&<p role="alert">{error}</p>}</section>
+}

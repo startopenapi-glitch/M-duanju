@@ -1,0 +1,35 @@
+# Example only: render absolute isolated paths and loopback ports before use.
+pid __PREFIX__/nginx.pid;
+error_log __PREFIX__/error.log;
+worker_processes 1;
+events { worker_connections 64; }
+http {
+ access_log off;
+ default_type application/octet-stream;
+ types { text/html html; application/javascript js; text/css css; image/svg+xml svg; image/x-icon ico; }
+ gzip on;
+ gzip_min_length 256;
+ gzip_vary on;
+ gzip_types text/css application/javascript application/json image/svg+xml;
+ server {
+  listen 127.0.0.1:__PORT__;
+  root __WEB__;
+  location ^~ /api/ {
+   proxy_pass http://127.0.0.1:__API_PORT__;
+   proxy_set_header Host $host;
+   proxy_set_header X-Real-IP $remote_addr;
+   proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+   proxy_cache off;
+   proxy_hide_header Cache-Control;
+   add_header Cache-Control "no-store" always;
+  }
+  location ~* "^/assets/.+-[a-z0-9_-]{8,}\.(js|css|woff2?|png|webp|svg)$" {
+   try_files $uri @missing;
+   add_header Cache-Control "public, max-age=31536000, immutable";
+  }
+  location /assets/ {try_files $uri @missing;add_header Cache-Control "no-cache" always;}
+  location ~* \.(ico|svg|png|jpg|webp|webmanifest|txt)$ {try_files $uri @missing;add_header Cache-Control "no-cache" always;}
+  location / {try_files $uri /index.html;add_header Cache-Control "no-cache" always;}
+  location @missing {add_header Cache-Control "no-cache" always;return 404;}
+ }
+}
